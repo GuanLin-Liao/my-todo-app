@@ -30,7 +30,7 @@ my-todo-app/
 
 🚀 線上預覽
 
-👉 https://my-todo-app.vercel.app（你部署後貼上網址）
+👉 https://todo-guanlin.vercel.app/（你部署後貼上網址）
 
 📦 安裝方式
 
