@@ -6,6 +6,7 @@ import Header from './components/Header';
 import TodoForm from './components/TodoForm';
 import FilterBar from './components/FilterBar';
 import TodoItem from './components/TodoItem';
+import SearchBar from './components/SearchBar';
 import { useTodo } from './context/useTodo';
 function App() {
   const { filteredTodos } = useTodo();
@@ -14,6 +15,7 @@ function App() {
     <div className='min-h-screen bg-gray-100 text-gray-800 p-4 md:p-8'>
       <div className='max-w-xl mx-auto'>
         <Header></Header>
+        <SearchBar></SearchBar>
         <TodoForm></TodoForm>
         <FilterBar></FilterBar>
         <div className='mt-4 space-y-2'>
