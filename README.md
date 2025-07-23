@@ -1,12 +1,46 @@
-# React + Vite
+📝 My ToDo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+這是一個使用 React + Vite + Tailwind CSS 打造的待辦清單應用，具備完整的增刪查改功能、過濾條件、資料保存等功能。
 
-Currently, two official plugins are available:
+🔧 使用技術
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⚛️ React（使用 Context 管理狀態）
 
-## Expanding the ESLint configuration
+⚡ Vite（超快速的開發環境）
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🎨 Tailwind CSS（優雅簡潔的 UI）
+
+💾 localStorage（資料持久化）
+
+📸 頁面截圖
+
+（你可以放上 UI 截圖）
+
+✨ 功能介紹
+
+🗂️ 專案結構（精簡）
+
+my-todo-app/
+├─ src/
+│ ├─ components/ # UI 元件
+│ ├─ context/ # Todo 狀態管理
+│ ├─ App.jsx # 主介面
+│ ├─ main.jsx # 入口檔案
+│ └─ index.css # Tailwind 樣式
+
+🚀 線上預覽
+
+👉 https://my-todo-app.vercel.app（你部署後貼上網址）
+
+📦 安裝方式
+
+git clone https://github.com/GuanLin-Liao/my-todo-app.git
+cd my-todo-app
+npm install
+npm run dev
+
+🙋‍♂️ 作者
+
+GitHub: GuanLin-Liao
+
+本專案僅作為學習與展示用途，歡迎 star 🌟 或 fork 🤝
