@@ -5,13 +5,13 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { auth } from '../firebase';
-
+import { useNavigate } from 'react-router-dom';
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true); // 登入 or 註冊模式
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -19,6 +19,7 @@ function AuthForm() {
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
+        navigate('/', { replace: true });
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
       }
