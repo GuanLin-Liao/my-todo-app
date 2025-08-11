@@ -1,6 +1,6 @@
 import axios from 'axios';
 import SearchInput from '../components/SearchInput';
-import Card from '../components/card';
+import Card from '../components/Card';
 import React, { useEffect, useState } from 'react';
 import { useUnsplash } from '../context/useUnsplash';
 export default function UnsplashPage() {
