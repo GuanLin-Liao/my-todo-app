@@ -30,10 +30,9 @@ function AuthForm() {
 
   return (
     <div className='max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow'>
-      <h2 className='text-xl font-bold text-center mb-4'>
+      <h2 className='text-xl font-bold text-center mb-4 text-blue-500 hover:text-blue-700'>
         {isLogin ? '登入' : '註冊'}
       </h2>
-
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
           type='email'
