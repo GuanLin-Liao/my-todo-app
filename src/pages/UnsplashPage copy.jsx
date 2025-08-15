@@ -3,19 +3,12 @@ import SearchInput from '../components/SearchInput';
 import Card from '../components/Card';
 import React, { useEffect, useRef, useState } from 'react';
 import { useUnsplash } from '../context/useUnsplash';
-import Loading from '../components/Loading';
-import Modal from '../components/Modal';
 export default function UnsplashPage() {
   const api = 'https://api.unsplash.com/search/photos/';
   const accessKey = '2D-eTcEkI8n0ILUyZde-xMjwZTlfSkWlA-bkHojuCHU';
-  const [isLoading, setIsLoading] = useState(false);
-  const [photoUrl, setPhotoUrl] = useState('');
   const listRef = useRef(null);
   const currentPage = useRef(1);
-
-  const isLoadingRef = useRef(false);
-  const [showModal, setShowModal] = useState(false);
-  const didRun = useRef(false);
+  const isLoading = useRef(false);
   const { keyword, setKeyword, jsonData, setJsonData } = useUnsplash();
   console.log('keyword', keyword);
   // const [keyword, setKeyword] = useState('animal');
@@ -24,10 +17,9 @@ export default function UnsplashPage() {
     setKeyword(text);
   };
 
-  const getPhotos = async (page = 1, isNew = true) => {
+  const getPhotos = async (page = 1) => {
     try {
-      setIsLoading(true);
-      isLoadingRef.current = true;
+      isLoading.current = true;
       const result = await axios.get(
         `${api}?client_id=${accessKey}&query=${keyword}&page=${page}`
       );
@@ -36,34 +28,19 @@ export default function UnsplashPage() {
         const newItems = result.data.results.filter(
           (item) => !preData.some((old) => old.id === item.id)
         );
-        console.log('更新資料觸發');
-        if (isNew) {
-          return [...result.data.results];
-        }
+        
         return [...preData, ...newItems];
       });
-      currentPage.current = page;
       setTimeout(() => {
-        isLoadingRef.current = false;
-        setIsLoading(false);
+        isLoading.current = false;
       }, 1000);
     } catch (error) {
       console.log(error);
     }
   };
-  const getSinglePhoto = async (slug) => {
-    const api = 'https://api.unsplash.com/photos/';
-    try {
-      const result = await axios(`${api}${slug}?client_id=${accessKey}`);
-      console.log(result);
-      setPhotoUrl(result.data.urls.regular);
-      setShowModal(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   useEffect(() => {
-    getPhotos(1, true);
+    getPhotos();
 
     // 滾動監聽
     const handleScroll = () => {
@@ -71,9 +48,9 @@ export default function UnsplashPage() {
         listRef.current.offsetHeight +
         listRef.current.offsetTop -
         window.innerHeight;
-      if (!isLoadingRef.current && window.scrollY > height) {
+      if (!isLoading.current && window.scrollY > height) {
         currentPage.current++;
-        getPhotos(currentPage.current, false);
+        getPhotos(currentPage.current);
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -82,18 +59,8 @@ export default function UnsplashPage() {
     };
   }, [keyword]);
 
-  useEffect(() => {
-    const body = document.querySelector('body');
-    if (isLoading) {
-      body.style.overflow = 'hidden';
-    } else {
-      body.style.overflow = 'auto';
-    }
-  }, [isLoading]);
-
   return (
     <div>
-      <Loading isLoading={isLoading}></Loading>
       <h1 className='text-2xl md:text-3xl font-bold text-center my-4'>
         Unsplash API查詢圖片
       </h1>
@@ -106,19 +73,11 @@ export default function UnsplashPage() {
         {jsonData.map((item) => {
           return (
             <div key={item.id}>
-              <Card item={item} getSinglePhoto={getSinglePhoto} />
+              <Card item={item} />
             </div>
           );
         })}
       </div>
-      <Modal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        photoUrl={photoUrl}
-        title='Modal title'
-      >
-        <p>Modal body text goes here.</p>
-      </Modal>
     </div>
   );
 }
