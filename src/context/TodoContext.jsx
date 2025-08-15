@@ -65,16 +65,15 @@ export function TodoProvider({ children }) {
 
   // 已登入情況下，從 Firestore 讀取
 
-  // const loadTodosFromFirestore = async (uid) => {
-  //   const q = query(collection(db, 'todos'), where('uid', '==', uid));
-  //   const querySnapshot = await getDocs(q);
-  //   console.log('querySnapshot', querySnapshot);
-  //   const todosArray = querySnapshot.docs.map((docItem) => ({
-  //     id: docItem.id,
-  //     ...docItem.data(),
-  //   }));
-  //   setTodos(todosArray);
-  // };
+  const loadTodosFromFirestore = async (uid) => {
+    const q = query(collection(db, 'todos'), where('uid', '==', uid));
+    const querySnapshot = await getDocs(q);
+    const todosArray = querySnapshot.docs.map((docItem) => ({
+      id: docItem.id,
+      ...docItem.data(),
+    }));
+    setTodos(todosArray);
+  };
 
   const addTodo = async (title) => {
     if (user) {
@@ -95,7 +94,7 @@ export function TodoProvider({ children }) {
       const todoRef = doc(db, 'todos', id);
       const target = todos.find((t) => t.id === id);
       await updateDoc(todoRef, { completed: !target.completed });
-      loadTodosFromFirestore(user.uid);
+      // loadTodosFromFirestore(user.uid);
     } else {
       const newTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -108,7 +107,7 @@ export function TodoProvider({ children }) {
   const removeTodo = async (id) => {
     if (user) {
       await deleteDoc(doc(db, 'todos', id));
-      loadTodosFromFirestore(user.uid);
+      // loadTodosFromFirestore(user.uid);
     } else {
       const newTodos = todos.filter((todo) => todo.id !== id);
       setTodos(newTodos);
@@ -119,7 +118,7 @@ export function TodoProvider({ children }) {
   const updateTodo = async (id, newTitle) => {
     if (user) {
       await updateDoc(doc(db, 'todos', id), { title: newTitle });
-      loadTodosFromFirestore(user.uid);
+      // loadTodosFromFirestore(user.uid);
     } else {
       const newTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, title: newTitle } : todo
